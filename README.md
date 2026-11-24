@@ -76,7 +76,7 @@ Le portail n'ajoute aucune protection : il affiche ce que chaque page publique a
 ## Tests
 
 ```bash
-cd v1 && python3 -m http.server 8784 &
+(cd v1 && python3 -m http.server 8784 &)
 CHROME=/usr/bin/google-chrome python3 tests/test_portail.py
 ```
 
