@@ -95,3 +95,5 @@ Les pages des outils et le document Grist sont simulés.
 ## Licence
 
 Voir `v1/LICENSE`. Le DSFR (`v1/vendor/dsfr`) est distribué sous sa propre licence.
+
+Widget conçu par le Lab 17 bis, le laboratoire d'innovation publique de l'académie de Reims.
