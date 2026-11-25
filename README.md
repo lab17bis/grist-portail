@@ -52,6 +52,16 @@ Une page se désigne de deux façons :
 
 Une page sans `lien` valide ni `adresse` valide affiche un message d'erreur à la place du cadre. Seules les adresses `http` et `https` sont acceptées.
 
+### Sites autorisés
+
+Le portail n'affiche que les pages de son propre site et des sites des outils (par défaut `lab17bis.github.io`). Une page d'un autre site est refusée avec un message. Pour en autoriser un, la personne qui **héberge** le portail l'ajoute dans le fichier `config.json` placé à côté de `index.html` :
+
+```json
+{ "hotesAutorises": ["mon-site.exemple.fr"] }
+```
+
+Cette liste n'est lue que dans ce fichier. Une configuration passée dans l'adresse (`?c=`, `?config=`, `?doc=`) ne peut pas l'élargir : quelqu'un qui fabrique un lien vers le portail ne peut donc pas y faire apparaître la page d'un site de son choix. La même règle s'applique à la clé `outils`, qui remplace l'adresse d'un outil.
+
 ### Configurer dans un document Grist
 
 Créer une table `Portail_Onglets` avec les colonnes :
@@ -71,7 +81,7 @@ Les réglages de la page (`page`, `accueil`, `outils`) se placent au format JSON
 
 ## Ce qui devient public
 
-Le portail n'ajoute aucune protection : il affiche ce que chaque page publique affiche. Avant de publier, vérifiez dans chaque document les règles d'accès Grist (colonnes personnelles, adresses de courriel, votes nominatifs).
+Le portail n'ajoute aucune protection aux données : il affiche ce que chaque page publique affiche. Avant de publier, vérifiez dans chaque document les règles d'accès Grist (colonnes personnelles, adresses de courriel, votes nominatifs).
 
 ## Tests
 

@@ -17,6 +17,7 @@ CFG = {
         {'titre': 'Carte', 'outil': 'carte', 'lien': 'https://grist.test/o/org/doc/DOC1', 'table': 'Lieux'},
         {'titre': 'Réunions', 'outil': 'reunion', 'lien': 'https://grist.test/doc/DOC1'},
         {'titre': 'Page libre', 'adresse': 'https://outil.test/p.html?public=1&doc=https%3A%2F%2Fgrist.test%2Fdoc%2FDOC1'},
+        {'titre': 'Site inconnu', 'adresse': 'https://site-pirate.test/page.html'},
         {'titre': 'Cassée', 'outil': 'carte', 'lien': 'pas un lien'},
         {'titre': 'Dangereuse', 'adresse': 'javascript:alert(1)'},
     ]}
@@ -27,6 +28,8 @@ with sync_playwright() as p:
     # Les pages des outils sont remplacées par une page vide : on contrôle seulement l'adresse demandée.
     pg.route(re.compile(r'^https://(lab17bis\.github\.io|outil\.test)/'), lambda r: r.fulfill(status=200, content_type='text/html', body='<p>outil</p>'))
     pg.route(re.compile(r'^https://grist\.test/'), lambda r: r.abort())
+    # config.json du portail : seul endroit où l'on autorise un autre site (outil.test).
+    pg.route('**/config.json', lambda r: r.fulfill(status=200, content_type='application/json', body='{"hotesAutorises": ["outil.test"]}'))
 
     # 1. Configuration dans l'adresse
     pg.goto(URL + '?c=' + enc(CFG)); pg.wait_for_selector('.po-menu')
@@ -34,7 +37,7 @@ with sync_playwright() as p:
     verifier('logo', pg.locator('#entete img').get_attribute('alt') == 'Logo test')
     verifier('pas de bloc-marque si vide', 'république' not in pg.locator('#entete').inner_text().lower())
     verifier('pied de page', 'Pied test' in pg.locator('#pied').inner_text())
-    verifier('menu : accueil + 5 pages', pg.locator('.po-lien').count() == 6)
+    verifier('menu : accueil + 6 pages', pg.locator('.po-lien').count() == 7)
     verifier('accueil par défaut, texte échappé', pg.locator('h1').inner_text() == 'Bienvenue' and pg.locator('.po-accueil b').count() == 0 and '<b>sûr</b>' in pg.locator('.po-accueil').inner_text())
     pg.locator('.po-lien', has_text='Carte').click(); pg.wait_for_selector('iframe.po-cadre')
     src = pg.locator('iframe.po-cadre').get_attribute('src')
@@ -54,6 +57,10 @@ with sync_playwright() as p:
     verifier('page mal configurée : message, pas d\'iframe', pg.locator('iframe').count() == 0 and 'pas configurée' in pg.locator('.fr-alert--warning').inner_text())
     pg.locator('.po-lien', has_text='Dangereuse').click(); pg.wait_for_selector('.fr-alert--warning')
     verifier('adresse javascript: refusée', pg.locator('iframe').count() == 0)
+    pg.locator('.po-lien', has_text='Site inconnu').click(); pg.wait_for_function("document.body.innerText.indexOf('pas autorisé')>0")
+    verifier('site non autorisé : refusé, pas d\'iframe', pg.locator('iframe').count() == 0)
+    pg.goto(URL + '?c=' + enc(dict(CFG, outils={'carte': 'https://site-pirate.test/carte.html'})) + '#/carte'); pg.wait_for_function("document.body.innerText.indexOf('pas autorisé')>0")
+    verifier('page d\'outil détournée vers un site non autorisé : refusée', pg.locator('iframe').count() == 0)
     pg.goto(URL + '?c=' + enc(CFG) + '#/inconnu'); pg.wait_for_selector('.po-accueil')
     verifier('adresse de page inconnue : première page', pg.locator('h1').inner_text() == 'Bienvenue')
 
@@ -100,9 +107,9 @@ with sync_playwright() as p:
     pg.goto(lien); pg.wait_for_selector('.po-menu')
     verifier('générateur : le lien produit ouvre le portail', pg.locator('.po-lien').all_inner_texts() == ['Page A', 'Page B'] and 'Mon portail' in pg.locator('#entete').inner_text())
     pg.goto(URL + 'configurer.html?c=' + enc(CFG)); pg.wait_for_selector('#cf-onglets .pe-ligne')
-    verifier('générateur : reprise d\'une configuration', pg.input_value('#cf-titre') == 'Portail test' and pg.locator('#cf-onglets .pe-ligne').count() == 5)
+    verifier('générateur : reprise d\'une configuration', pg.input_value('#cf-titre') == 'Portail test' and pg.locator('#cf-onglets .pe-ligne').count() == 6)
     pg.locator('[data-i="0"] [data-act=suppr]').click()
-    verifier('générateur : suppression d\'une page', pg.locator('#cf-onglets .pe-ligne').count() == 4)
+    verifier('générateur : suppression d\'une page', pg.locator('#cf-onglets .pe-ligne').count() == 5)
     pg.fill('#cf-json', '{pas du json'); pg.click('#cf-charger')
     verifier('générateur : JSON illisible signalé', 'illisible' in pg.inner_text('#cf-etat'))
     verifier('aucune erreur JavaScript', not erreurs)

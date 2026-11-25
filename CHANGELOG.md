@@ -2,6 +2,11 @@
 
 Les adresses `/v1/` ne changent pas : chaque version ajoute ou corrige, sans retirer ce qui existe.
 
+## 2026-11-25 (sites autorisés)
+
+### Sécurité
+- Le portail n'affiche plus que les pages de son propre site et des sites des outils. Un autre site doit être ajouté par la personne qui héberge le portail, dans `config.json` (clé `hotesAutorises`). Une adresse fabriquée (`?c=`, `?config=`, `?doc=`) ne peut ni intégrer la page d'un site quelconque, ni détourner l'adresse d'un outil.
+
 ## 2026-11-25 (audit de sécurité)
 
 ### Sécurité

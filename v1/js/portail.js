@@ -11,6 +11,7 @@
  *   { page: { marque, titre, sousTitre, logo: { src, alt, hauteur }, pied: { texte, liens, mention, accessibilite } },
  *     accueil: { titre, texte },
  *     outils: { carte: "adresse de la page publique de l'outil" },
+ *     hotesAutorises: ["autre.site.fr"]   lu seulement dans config.json : sites dont les pages peuvent être intégrées
  *     onglets: [ { titre, outil, lien, table, options, mappings }   outil + document Grist public
  *              | { titre, adresse } ] }                              adresse de page publique copiée depuis l'outil
  */
@@ -28,6 +29,13 @@
   };
 
   var GP = window.GristPublic;
+
+  // Sites dont les pages peuvent s'afficher dans le portail : celui du portail, ceux des outils,
+  // et ceux que la personne qui héberge le portail ajoute dans config.json (clé « hotesAutorises »).
+  // Une adresse fabriquée (?c=, ?config=, ?doc=) ne peut pas élargir cette liste.
+  var HOTES = [location.host];
+  Object.keys(OUTILS).forEach(function (k) { HOTES.push(new URL(OUTILS[k].page).host); });
+  function hoteAutorise(u) { return HOTES.indexOf(u.host) >= 0; }
   var P = new URLSearchParams(location.search);
   var cfg = null;
   var entrees = [];
@@ -101,6 +109,7 @@
     if (o.adresse) {
       var u = adresseWeb(o.adresse);
       if (!u) { return null; }
+      if (!hoteAutorise(u)) { return { refus: u.host }; }
       if (integre) { u.searchParams.set("integre", "1"); } else { u.searchParams.delete("integre"); }
       return u.href;
     }
@@ -108,6 +117,7 @@
     if (!outil || !GP.analyserLien(o.lien)) { return null; }
     var base = adresseWeb((cfg.outils || {})[o.outil] || outil.page);
     if (!base) { return null; }
+    if (!hoteAutorise(base)) { return { refus: base.host }; }
     return GP.lien(base.href, { doc: o.lien, table: o.table, options: o.options, mappings: o.mappings, integre: integre });
   }
 
@@ -126,7 +136,9 @@
     (cfg.onglets || []).forEach(function (o, i) {
       if (!o || o.actif === false) { return; }
       var titre = o.titre || (OUTILS[o.outil] && OUTILS[o.outil].libelle) || ("Page " + (i + 1));
-      ajouter({ titre: titre, src: adressePage(o, true), seul: adressePage(o, false), brut: o });
+      var src = adressePage(o, true), seul = adressePage(o, false);
+      if (src && src.refus) { ajouter({ titre: titre, refus: src.refus, brut: o }); return; }
+      ajouter({ titre: titre, src: src, seul: seul, brut: o });
     });
     return liste;
   }
@@ -156,6 +168,10 @@
       zone.innerHTML = "<div class=\"fr-container po-accueil\"><h1>" + esc(e.accueil.titre || e.titre) + "</h1>" + paragraphes + "</div>";
       return;
     }
+    if (e.refus) {
+      zone.innerHTML = "<div class=\"fr-container fr-my-4w\"><div class=\"fr-alert fr-alert--warning\"><h1 class=\"fr-alert__title\">" + esc(e.titre) + "</h1><p>Cette page vient d'un site que ce portail n'est pas autorisé à afficher (" + esc(e.refus) + "). La personne qui héberge le portail peut l'ajouter à la liste « hotesAutorises » de son fichier config.json.</p></div></div>";
+      return;
+    }
     if (!e.src) {
       zone.innerHTML = "<div class=\"fr-container fr-my-4w\"><div class=\"fr-alert fr-alert--warning\"><h1 class=\"fr-alert__title\">" + esc(e.titre) + "</h1><p>Cette page n'est pas configurée correctement : lien du document Grist ou adresse de page publique manquant ou non valide.</p></div></div>";
       return;
@@ -183,7 +199,11 @@
     afficher();
   }
 
-  lireConfiguration().then(demarrer).catch(function (e) {
+  // La liste des sites autorisés vient toujours du config.json voisin, quelle que soit la source de la configuration.
+  fetch("config.json").then(json).catch(function () { return {}; }).then(function (local) {
+    (Array.isArray(local.hotesAutorises) ? local.hotesAutorises : []).forEach(function (h) { if (typeof h === "string" && h) { HOTES.push(h.toLowerCase()); } });
+    return lireConfiguration();
+  }).then(demarrer).catch(function (e) {
     window.PageDSFR.appliquer({ marque: "République\nfrançaise", titre: "Portail", pied: { accessibilite: "" } }, { entete: document.getElementById("entete"), pied: document.getElementById("pied") });
     erreur((e && e.message) || e);
   });
