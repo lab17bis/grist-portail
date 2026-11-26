@@ -2,7 +2,27 @@
 
 Portail en interface DSFR : une page à menu qui rassemble les pages publiques des outils Grist (carte, graphe, consultation, réunions, management visuel, suivi de projets). Le portail ne lit rien lui-même : il affiche chaque page publique dans un cadre, avec le nom, le logo et le pied de page de la communauté.
 
-Adresse stable : `https://lab17bis.github.io/grist-portail/v1/`
+Adresse stable de la page publique : `https://lab17bis.github.io/grist-portail/v1/`
+
+Adresse du widget (configurateur, à ajouter dans Grist comme vue personnalisée, accès complet) : `https://lab17bis.github.io/grist-portail/v1/widget.html`
+
+## Le configurer dans Grist
+
+Le widget suit la page de configuration commune aux autres outils : une seule page à onglets.
+
+| Onglet | Rôle |
+|---|---|
+| **Portail** | Le portail tel qu'il s'affichera, avec la configuration en cours. |
+| **Pages** | Page d'accueil facultative, puis les pages du menu : titre, outil et document Grist, ou adresse d'une page publique ; ordre, affichage, retrait. |
+| **En-tête et pied** | Bloc-marque, logo, titre, pied de page. |
+| **Aperçu** | Le portail complet, avec son en-tête et son pied de page. |
+| **Publication** | Le lien de la page publique du portail, à partir du lien du document Grist partagé en lecture publique. |
+
+À la première ouverture, le widget propose de créer la table `Portail_Onglets`. L'enregistrement écrit une ligne par page et les réglages de la page dans la colonne `Config_portail`.
+
+### Exemple : une consultation publique
+
+Deux pages : la page publique de [grist-consultation](https://github.com/lab17bis/grist-consultation) (outil « Consultation » et lien du document), puis la page publique d'un [grist-questionnaire](https://github.com/lab17bis/grist-questionnaire) branché sur la table des votes (« Une adresse de page publique »). Les personnes consultent les propositions, puis votent sans quitter la même adresse.
 
 ## Ce que permet le portail
 

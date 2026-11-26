@@ -2,6 +2,15 @@
 
 Les adresses `/v1/` ne changent pas : chaque version ajoute ou corrige, sans retirer ce qui existe.
 
+## 2026-11-26 (configurateur dans Grist)
+
+### Ajouté
+- Widget `widget.html` : configurateur du portail dans Grist, avec la page de configuration commune (Portail, Pages, En-tête et pied, Aperçu, Publication). Création de la table `Portail_Onglets` à la première ouverture ; pages ajoutées, ordonnées, retirées ; lien de publication construit.
+- Paramètre `integre=1` sur la page du portail : retire l'en-tête et le pied de page (utilisé par la vue du widget).
+
+### Inchangé
+- La page publique `index.html`, ses adresses et ses sources de configuration (`?c=`, `?config=`, `?doc=`, `config.json`).
+
 ## 2026-11-25 (mention de conception)
 
 ### Ajouté

@@ -16,3 +16,13 @@
 
 /* Lien d'évitement : visible seulement au clavier. */
 body > a.fr-link:first-child:not(:focus) { position: absolute; left: -9999px; }
+
+/* Mode intégré : sans en-tête, pied ni lien d'évitement (aperçu dans le widget Grist). */
+.po-integre #entete, .po-integre #pied, .po-integre > a.fr-link:first-child { display: none; }
+
+/* Widget Grist : configuration du portail. */
+.po-widget .po-marge { padding: 0 1rem; }
+.po-page-fiche { border: 1px solid var(--border-default-grey); border-radius: .25rem; padding: .75rem 1rem; margin-bottom: 1rem; }
+.po-page-fiche .po-barre { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .5rem; }
+.po-grille { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 0 1rem; }
+.po-cadre-vue { display: block; width: 100%; border: 0; background: #fff; min-height: 560px; }

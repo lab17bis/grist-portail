@@ -189,6 +189,7 @@
     var r = window.PageDSFR.appliquer(page, { entete: document.getElementById("entete"), pied: document.getElementById("pied"), accueil: "#/" });
     if (r.entete) { r.entete.id = "entete"; }
     if (r.pied) { r.pied.id = "pied"; }
+    if (P.get("integre") === "1") { document.body.classList.add("po-integre"); }
     entrees = construire();
     if (!entrees.length) {
       document.getElementById("po-contenu").innerHTML = "<div class=\"fr-container fr-my-4w\"><div class=\"fr-callout\"><h1 class=\"fr-callout__title\">Portail non configuré</h1><p class=\"fr-callout__text\">Aucune page à afficher. Construisez la configuration avec <a href=\"configurer.html\">le générateur</a>.</p></div></div>";
