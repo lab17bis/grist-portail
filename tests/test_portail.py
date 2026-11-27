@@ -1,6 +1,6 @@
 """Tests de bout en bout du portail : python3 tests/test_portail.py
 Variables : CHROME (chemin du navigateur), URL (par défaut http://localhost:8784/).
-Lancer d'abord un serveur : cd v1 && python3 -m http.server 8784
+Lancer d'abord un serveur : python3 -m http.server 8784
 Les pages publiques des outils et le document Grist de configuration sont simulés : aucun appel réseau extérieur."""
 import os, sys, json, re, base64
 from playwright.sync_api import sync_playwright

@@ -1,0 +1,15 @@
+{
+  "page": {
+    "marque": "République\nfrançaise",
+    "titre": "Nom du portail",
+    "sousTitre": "Une phrase pour dire à quoi sert ce portail",
+    "logo": { "src": "", "alt": "", "hauteur": 3 },
+    "pied": { "texte": "", "accessibilite": "" }
+  },
+  "accueil": { "titre": "Bienvenue", "texte": "Premier paragraphe.\n\nSecond paragraphe." },
+  "onglets": [
+    { "titre": "Carte", "outil": "carte", "lien": "https://grist.exemple.fr/o/organisation/doc/IDENTIFIANT", "table": "Lieux" },
+    { "titre": "Réunions", "outil": "reunion", "lien": "https://grist.exemple.fr/o/organisation/doc/IDENTIFIANT" },
+    { "titre": "Autre page", "adresse": "https://exemple.fr/page-publique.html?public=1&doc=…" }
+  ]
+}

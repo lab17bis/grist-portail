@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr" data-fr-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' https://docs.getgrist.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; font-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https: http://localhost:* http://127.0.0.1:*; frame-src 'self' https:; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configurer le portail</title>
+  <link rel="stylesheet" href="vendor/dsfr/dsfr.min.css">
+  <link rel="stylesheet" href="vendor/dsfr/utility/icons/icons.min.css">
+  <link rel="stylesheet" href="commun/page.css?v=2">
+  <link rel="stylesheet" href="css/portail.css?v=1">
+</head>
+<body>
+  <a class="fr-link" href="#cf-app">Aller au contenu</a>
+  <div id="entete"></div>
+  <main id="cf-app" class="fr-container fr-my-4w" tabindex="-1">
+    <h1>Configurer le portail</h1>
+    <p>Renseignez le nom, le logo et les pages du portail. Le générateur produit un lien prêt à partager, et la configuration au format JSON à enregistrer dans <code>config.json</code> si vous hébergez votre propre copie.</p>
+
+    <section class="pe-section">
+      <h2>Identité</h2>
+      <div class="fr-input-group"><label class="fr-label" for="cf-titre">Nom du portail</label><input class="fr-input" id="cf-titre" type="text"></div>
+      <div class="fr-input-group"><label class="fr-label" for="cf-sous">Sous-titre</label><input class="fr-input" id="cf-sous" type="text"></div>
+      <div class="fr-checkbox-group fr-my-2w"><input type="checkbox" id="cf-marque" checked><label class="fr-label" for="cf-marque">Afficher le bloc-marque « République française »</label></div>
+      <div class="fr-input-group"><label class="fr-label" for="cf-logo">Logo<span class="fr-hint-text">Adresse https d'une image, ou choisissez un fichier (PNG, JPEG, SVG, 200 ko maximum). Un fichier alourdit le lien : préférez alors config.json.</span></label><input class="fr-input" id="cf-logo" type="text" placeholder="https://…"></div>
+      <div class="fr-upload-group fr-my-2w"><label class="fr-label" for="cf-fichier">Ou choisir un fichier</label><input class="fr-upload" id="cf-fichier" type="file" accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml"></div>
+      <div class="fr-input-group"><label class="fr-label" for="cf-alt">Texte alternatif du logo</label><input class="fr-input" id="cf-alt" type="text"></div>
+      <div class="fr-input-group"><label class="fr-label" for="cf-pied">Texte du pied de page</label><textarea class="fr-input" id="cf-pied" rows="2"></textarea></div>
+    </section>
+
+    <section class="pe-section">
+      <h2>Page d'accueil (facultative)</h2>
+      <div class="fr-input-group"><label class="fr-label" for="cf-acc-titre">Titre</label><input class="fr-input" id="cf-acc-titre" type="text"></div>
+      <div class="fr-input-group"><label class="fr-label" for="cf-acc-texte">Texte<span class="fr-hint-text">Séparez les paragraphes par une ligne vide.</span></label><textarea class="fr-input" id="cf-acc-texte" rows="4"></textarea></div>
+    </section>
+
+    <section class="pe-section">
+      <h2>Pages</h2>
+      <p>Chaque page affiche la page publique d'un outil. Deux façons de la désigner : coller le lien de la page publique copié depuis l'onglet Publication de l'outil, ou choisir l'outil et indiquer le document Grist partagé en lecture publique.</p>
+      <div id="cf-onglets"></div>
+      <p><button type="button" class="fr-btn fr-btn--secondary fr-icon-add-line fr-btn--icon-left" id="cf-ajouter">Ajouter une page</button></p>
+    </section>
+
+    <section class="pe-section">
+      <h2>Résultat</h2>
+      <div class="fr-input-group"><label class="fr-label" for="cf-lien">Lien du portail</label><input class="fr-input" id="cf-lien" type="text" readonly></div>
+      <p id="cf-avis" class="fr-hint-text"></p>
+      <ul class="fr-btns-group fr-btns-group--inline-md">
+        <li><button type="button" class="fr-btn" id="cf-copier-lien">Copier le lien</button></li>
+        <li><a class="fr-btn fr-btn--secondary" id="cf-ouvrir" href="#" target="_blank" rel="noopener">Ouvrir le portail - nouvelle fenêtre</a></li>
+      </ul>
+      <div class="fr-input-group"><label class="fr-label" for="cf-json">Configuration (JSON)<span class="fr-hint-text">À enregistrer dans config.json, ou à coller ici pour reprendre une configuration existante.</span></label><textarea class="fr-input" id="cf-json" rows="12" spellcheck="false"></textarea></div>
+      <ul class="fr-btns-group fr-btns-group--inline-md">
+        <li><button type="button" class="fr-btn fr-btn--secondary" id="cf-copier-json">Copier la configuration</button></li>
+        <li><button type="button" class="fr-btn fr-btn--secondary" id="cf-charger">Charger depuis le JSON ci-dessus</button></li>
+      </ul>
+      <p id="cf-etat" role="status" class="fr-hint-text"></p>
+    </section>
+  </main>
+  <div id="pied"></div>
+  <script src="commun/page-dsfr.js?v=3"></script>
+  <script src="commun/grist-public.js?v=1"></script>
+  <script src="js/configurer.js?v=1"></script>
+</body>
+</html>

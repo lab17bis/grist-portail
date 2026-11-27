@@ -1,0 +1,28 @@
+/* Portail : menu des pages et cadre d'intégration. */
+.po-menu { border-bottom: 1px solid var(--border-default-grey); background: var(--background-default-grey); }
+.po-menu ul { display: flex; flex-wrap: wrap; gap: 0 0.25rem; list-style: none; margin: 0; padding: 0; }
+.po-menu li { padding: 0; margin: 0; }
+.po-menu a.po-lien {
+  display: block; padding: 0.75rem 1rem; font-weight: 500; text-decoration: none;
+  background-image: none; color: var(--text-title-grey); border-bottom: 3px solid transparent;
+}
+.po-menu a.po-lien:hover { background-color: var(--background-default-grey-hover); }
+.po-menu a.po-lien[aria-current="page"] { color: var(--text-action-high-blue-france); border-bottom-color: var(--border-active-blue-france); }
+.po-contenu { outline: none; }
+.po-outils { display: flex; justify-content: flex-end; padding: 0.5rem 0; }
+.po-cadre { display: block; width: 100%; border: 0; min-height: 600px; background: #fff; }
+.po-accueil { padding-top: 2rem; padding-bottom: 2rem; }
+.po-accueil p { max-width: 50rem; }
+
+/* Lien d'évitement : visible seulement au clavier. */
+body > a.fr-link:first-child:not(:focus) { position: absolute; left: -9999px; }
+
+/* Mode intégré : sans en-tête, pied ni lien d'évitement (aperçu dans le widget Grist). */
+.po-integre #entete, .po-integre #pied, .po-integre > a.fr-link:first-child { display: none; }
+
+/* Widget Grist : configuration du portail. */
+.po-widget .po-marge { padding: 0 1rem; }
+.po-page-fiche { border: 1px solid var(--border-default-grey); border-radius: .25rem; padding: .75rem 1rem; margin-bottom: 1rem; }
+.po-page-fiche .po-barre { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .5rem; }
+.po-grille { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 0 1rem; }
+.po-cadre-vue { display: block; width: 100%; border: 0; background: #fff; min-height: 560px; }

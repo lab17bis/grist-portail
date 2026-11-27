@@ -2,6 +2,10 @@
 
 Les adresses `/v1/` ne changent pas : chaque version ajoute ou corrige, sans retirer ce qui existe.
 
+## 2026-11-27 (remise à niveau)
+- Fichiers communs de la barre de réglages remis au niveau des autres outils : bouton Enregistrer aligné et place réservée, pastille Enregistré visible partout, onglets centrés, lien réservé aux personnes invitées dans Publication, adresse à identifiant long refusée.
+- Dépôt rangé comme les autres : le code de travail est à la racine, `v1/` est la copie figée par `outils/figer-version.sh 1`. Les adresses `/v1/` ne changent pas ; la racine ouvre désormais le portail au lieu de rediriger.
+
 ## 2026-11-26 (style commun de configuration)
 
 ### Corrigé

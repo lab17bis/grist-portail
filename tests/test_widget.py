@@ -1,5 +1,5 @@
 """Test « dans Grist » du configurateur du portail, avec une API Grist simulée (tests/grist-mock.js) chargée dans tests/hote.html.
-Lancer un serveur dans v1 (cd v1 && python3 -m http.server PORT), puis : PORT=… python3 tests/test_widget.py"""
+Lancer un serveur dans v1 (python3 -m http.server PORT), puis : PORT=… python3 tests/test_widget.py"""
 import os, json, re
 from playwright.sync_api import sync_playwright
 ok = ko = 0
@@ -9,7 +9,7 @@ def verifier(nom, cond):
 def ouvrir(b, mock, erreurs):
     pg = b.new_page(viewport={'width': 1280, 'height': 900})
     pg.on('pageerror', lambda e: erreurs.append(str(e)))
-    mockjs = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'v1', 'tests', 'grist-mock.js')).read()
+    mockjs = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'grist-mock.js')).read()
     pg.route('https://docs.getgrist.com/grist-plugin-api.js', lambda r: r.fulfill(status=200, content_type='application/javascript', body=mockjs))
     pg.route(re.compile(r'^https://(outil\.test|grist\.test)/'), lambda r: r.fulfill(status=200, content_type='text/html', body='<p>page</p>'))
     pg.goto(f'http://localhost:{os.environ.get("PORT", 8784)}/tests/hote.html')
