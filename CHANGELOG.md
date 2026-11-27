@@ -7,6 +7,7 @@ Les adresses `/v1/` ne changent pas : chaque version ajoute ou corrige, sans ret
 - L'outil n'a plus d'onglet à son nom : il s'utilise dans l'Aperçu, ouvert par défaut, avec l'en-tête et le pied de page (affichés une seule fois). Les rubriques propres à l'outil sont des sous-onglets de Réglages quand il y en a plusieurs.
 - Liens et boutons « Réglages » ou « Configurer » de l'outil masqués : la barre suffit.
 - Même lien, deux affichages : chaque vue Grist choisit, dans Publication, l'éditeur du widget ou la page d'usage (l'outil avec son en-tête et son pied, sans barre, avec un lien « Éditer le widget »). Le choix est une option de la vue Grist ; par défaut, l'éditeur s'affiche comme avant.
+- Affichage de la vue : après « Appliquer à cette vue », un texte rappelle de cliquer sur Enregistrer en haut de la vue Grist pour garder le choix (vérifié dans Grist).
 
 ## 2026-11-27 (remise à niveau)
 - Fichiers communs de la barre de réglages remis au niveau des autres outils : bouton Enregistrer aligné et place réservée, pastille Enregistré visible partout, onglets centrés, lien réservé aux personnes invitées dans Publication, adresse à identifiant long refusée.
