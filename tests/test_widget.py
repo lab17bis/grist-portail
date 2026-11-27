@@ -23,11 +23,11 @@ with sync_playwright() as p:
     m = {'tables': {'Table1': {'colonnes': {'A': {'type': 'Text'}}, 'lignes': []}}, 'table': 'Table1', 'utilisateur': {'email': 'a@exemple.fr', 'nom': 'A'}}
     pg, f = ouvrir(b, m, erreurs)
     f.locator('#po-installer').click()
-    onglet(f, 'Pages').wait_for()
+    onglet(f, 'Réglages').wait_for()
     d = mock(pg)['tables']
     verifier('installation : table Portail_Onglets et colonne Config_portail', 'Portail_Onglets' in d and 'Config_portail' in d['Portail_Onglets']['colonnes'])
-    verifier('onglets communs : Portail, Pages, Aperçu, Publication', all(onglet(f, n).count() for n in ['Portail', 'Pages', 'Aperçu', 'Publication']))
-    onglet(f, 'Pages').click()
+    verifier('onglets communs : Réglages, En-tête et pied, Aperçu, Publication', all(onglet(f, n).count() for n in ['Réglages', 'En-tête et pied', 'Aperçu', 'Publication']))
+    onglet(f, 'Réglages').click()
     f.locator('#ac-titre').fill('Bienvenue'); f.locator('#ac-texte').fill('Premier paragraphe.')
     f.get_by_role('button', name='Ajouter une page').click()
     f.locator('#pg-titre-0').fill('Consultation'); f.locator('#pg-outil-0').select_option('consultation')
@@ -46,7 +46,7 @@ with sync_playwright() as p:
     cfg = json.loads(t['colonnes']['Config_portail']['description'])
     verifier('enregistrement : accueil dans Config_portail', cfg['accueil']['titre'] == 'Bienvenue')
     # Le portail affiché dans la vue reprend la configuration
-    onglet(f, 'Portail').click()
+    onglet(f, 'Aperçu').click()
     src = f.locator('iframe.po-cadre-vue').get_attribute('src')
     verifier('vue : le portail est affiché en mode intégré avec la configuration', 'integre=1' in src and '?c=' in src)
     cadre = f.frame_locator('iframe.po-cadre-vue')
@@ -61,7 +61,7 @@ with sync_playwright() as p:
     # Rechargement : l'état revient
     doc = mock(pg)['tables']; pg.close()
     pg, f = ouvrir(b, dict(m, tables=doc), erreurs)
-    onglet(f, 'Pages').click()
+    onglet(f, 'Réglages').click()
     verifier('rechargement : les pages sont relues', f.locator('#pg-titre-0').input_value() == 'Vote' and f.locator('#ac-titre').input_value() == 'Bienvenue')
     pg.close()
     verifier('aucune erreur JavaScript', not erreurs)

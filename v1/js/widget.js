@@ -235,12 +235,12 @@
     brouillon = nouveauBrouillon();
     var base = location.href.split("#")[0].split("?")[0];
     configLab = window.ConfigLab.monter(coque, {
-      nom: "Portail",
+      nom: "Widget portail",
       vue: { libelle: "Portail", element: app },
       page: brouillon.page,
       onglets: [{ id: "pages", libelle: "Pages", rendre: function (zone) { ongletPages(zone); } }],
       surApercu: function (ouvert) { if (ouvert) { dessinerVue(); } },
-      surOnglet: function (id) { if (id === "vue") { dessinerVue(); } },
+      surOnglet: function (id) { if (id === "vue" || id === "apercu") { dessinerVue(); } },
       publication: { mode: "connecte", adresseWidget: base,
         publier: {
           lienDoc: (brouillon.publication && brouillon.publication.lienDoc) || "",

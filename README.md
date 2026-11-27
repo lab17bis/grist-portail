@@ -8,15 +8,16 @@ Adresse du widget (configurateur, à ajouter dans Grist comme vue personnalisée
 
 ## Le configurer dans Grist
 
-Le widget suit la page de configuration commune aux autres outils : une seule page à onglets.
+Le widget suit l'éditeur commun aux autres outils : nom et statut à gauche, quatre onglets au centre, *Enregistrer* à droite.
 
 | Onglet | Rôle |
 |---|---|
-| **Portail** | Le portail tel qu'il s'affichera, avec la configuration en cours. |
-| **Pages** | Page d'accueil facultative, puis les pages du menu : titre, outil et document Grist, ou adresse d'une page publique ; ordre, affichage, retrait. |
+| **Réglages** | Page d'accueil facultative, puis les pages du menu : titre, outil et document Grist, ou adresse d'une page publique ; ordre, affichage, retrait. |
 | **En-tête et pied** | Bloc-marque, logo, titre, pied de page. |
-| **Aperçu** | Le portail complet, avec son en-tête et son pied de page. |
+| **Aperçu** | Le portail complet, avec son en-tête et son pied de page (onglet ouvert par défaut). |
 | **Publication** | Le lien de la page publique du portail, à partir du lien du document Grist partagé en lecture publique. |
+
+**Éditeur du widget ou page d'usage, avec le même lien.** Chaque vue Grist choisit ce qu'elle affiche (onglet *Publication*, rubrique *Affichage de cette vue Grist*) : l'**éditeur du widget** (affichage par défaut) ou la **page d'usage** (l'outil avec son en-tête et son pied de page, sans barre de réglages ; un lien *Éditer le widget*, en bas de page, rouvre l'éditeur). Pour avoir les deux dans un document, ajoutez deux vues Personnalisées avec la même adresse. Ce choix n'est pas une protection : les droits restent ceux du document (Partager, Permissions avancées).
 
 À la première ouverture, le widget propose de créer la table `Portail_Onglets`. L'enregistrement écrit une ligne par page et les réglages de la page dans la colonne `Config_portail`.
 

@@ -2,6 +2,12 @@
 
 Les adresses `/v1/` ne changent pas : chaque version ajoute ou corrige, sans retirer ce qui existe.
 
+## 2026-11-27 (barre commune de l'éditeur)
+- Barre commune à tous les widgets (fichier partagé `commun/barre.js` et `commun/barre.css`) : nom du widget et statut à gauche, onglets Réglages, En-tête et pied, Aperçu, Publication au centre, Enregistrer à droite ; barre collante en haut de l'écran.
+- L'outil n'a plus d'onglet à son nom : il s'utilise dans l'Aperçu, ouvert par défaut, avec l'en-tête et le pied de page (affichés une seule fois). Les rubriques propres à l'outil sont des sous-onglets de Réglages quand il y en a plusieurs.
+- Liens et boutons « Réglages » ou « Configurer » de l'outil masqués : la barre suffit.
+- Même lien, deux affichages : chaque vue Grist choisit, dans Publication, l'éditeur du widget ou la page d'usage (l'outil avec son en-tête et son pied, sans barre, avec un lien « Éditer le widget »). Le choix est une option de la vue Grist ; par défaut, l'éditeur s'affiche comme avant.
+
 ## 2026-11-27 (remise à niveau)
 - Fichiers communs de la barre de réglages remis au niveau des autres outils : bouton Enregistrer aligné et place réservée, pastille Enregistré visible partout, onglets centrés, lien réservé aux personnes invitées dans Publication, adresse à identifiant long refusée.
 - Dépôt rangé comme les autres : le code de travail est à la racine, `v1/` est la copie figée par `outils/figer-version.sh 1`. Les adresses `/v1/` ne changent pas ; la racine ouvre désormais le portail au lieu de rediriger.
